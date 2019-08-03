@@ -1,0 +1,22 @@
+{
+  "name": "javascript-tri-peaks-solitaire-solver",
+  "version": "1.0.0",
+  "description": "A brute force solver for tri peaks solitaire written in javascript",
+  "main": "solver.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgniparousTempest/javascript-tri-peaks-solitaire-solver.git"
+  },
+  "author": "Courtney Pitcher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgniparousTempest/javascript-tri-peaks-solitaire-solver/issues"
+  },
+  "homepage": "https://github.com/IgniparousTempest/javascript-tri-peaks-solitaire-solver#readme",
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
+}

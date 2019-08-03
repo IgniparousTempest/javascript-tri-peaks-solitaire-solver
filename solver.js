@@ -73,9 +73,17 @@ class MoveString {
     static flipStock() {return "Draw a new stock card.";}
 }
 
-const GameStates = Object.freeze({"won": 1, "lost": 2, "inProgress": 3});
+const GameStates = Object.freeze({"won": true, "lost": false});
 
-function solve(pyramidArray, stockArray, stockIndex, remainingStocks, moveArray) {
+/**
+ * Solves a Tri Peaks solitaire game.
+ * @param pyramidArray The cards in the pyramids, starting in the top-left peak. The cards are in left-to-right, then top-to-bottom order.
+ * @param stockArray The cards in the stock.
+ * @param stockIndex The index of the top stock card.
+ * @param moveArray The list of moves that have been made to get a deck in this configuration.
+ * @returns {*[]|([*, *]|[*, *]|[*, *])}
+ */
+function solve(pyramidArray, stockArray, stockIndex = 0, moveArray = []) {
     let newMoveArray = JSON.parse(JSON.stringify(moveArray));
     let pyramid = new Pyramid(pyramidArray);
 
@@ -109,7 +117,7 @@ function solve(pyramidArray, stockArray, stockIndex, remainingStocks, moveArray)
         let newPyramidArray = JSON.parse(JSON.stringify(pyramidArray));
         newPyramidArray[freeCardsIndices[i]] = 0;
 
-        let result = solve(newPyramidArray, newStock, stockIndex, remainingStocks, newMoveArray);
+        let result = solve(newPyramidArray, newStock, stockIndex, newMoveArray);
         if (result[0] === GameStates.won)
             return result;
     }
@@ -117,10 +125,12 @@ function solve(pyramidArray, stockArray, stockIndex, remainingStocks, moveArray)
     // Flip over a new card
     newMoveArray = JSON.parse(JSON.stringify(moveArray));
     newMoveArray.push(MoveString.flipStock());
-    let result = solve(pyramidArray, stockArray, stockIndex + 1, remainingStocks, newMoveArray);
+    let result = solve(pyramidArray, stockArray, stockIndex + 1, newMoveArray);
     if (result[0] === GameStates.won)
         return result;
 
     // This node was useless
-    return [GameStates.inProgress, moveArray];
+    return [GameStates.lost, moveArray];
 }
+
+exports.solve = solve;
